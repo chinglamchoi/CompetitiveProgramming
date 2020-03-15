@@ -11,7 +11,7 @@ if length(H) = 8 then
   end else
   begin
   s:= 9*36+8*(ord(H[1])-55);
-  for i := 2 to 6 do s:= s + (8-i)*(ord(H[i+1])-48)
+  for i := 1 to 6 do s:= s + (8-i)*(ord(H[i+1])-48)
   end;
 
 i := 0;
