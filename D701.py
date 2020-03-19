@@ -9,7 +9,7 @@ for i in range(input1):
         if len(array1) == 0:
             print("Empty")
         else:
-            print(array1[len(array1)-1])
+            print(array1[len(array1) - 1])
     elif len(input2) == 3:
         if len(array1) == 0:
             print("Cannot pop")
