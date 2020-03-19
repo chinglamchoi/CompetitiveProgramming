@@ -8,7 +8,7 @@ elif a == d:
     elif b == e:
         if c > f:
             print("After")
-        elif c==f:
+        elif c == f:
             print("Same")
         else:
             print("Before")
