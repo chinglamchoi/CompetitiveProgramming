@@ -3,19 +3,19 @@ input1 = int(input())
 input2 = None
 for i in range(input1):
     input2 = input()
-    if len(input2) == 4: #size
+    if len(input2) == 4:
         print(len(array1))
-    elif len(input2) == 5: #front
+    elif len(input2) == 5:
         if len(array1) == 0:
             print("Empty")
         else:
-            print(array1[len(array1)-1])
-    elif len(input2) == 3: #pop
+            print(array1[0])
+    elif len(input2) == 3:
         if len(array1) == 0:
             print("Cannot pop")
         else:
-            array1.pop(len(array1)-1)
-    else: #PUSH
+            array1 = [array1.pop(len(array1)-1)]
+    else:
         a, b = input2.split()
         b = int(b)
-        array1.insert(0, b)
+        array1.append(b)
