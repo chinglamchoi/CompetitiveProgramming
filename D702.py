@@ -10,7 +10,7 @@ for i in range(input1):
             if len(array1) == 0:
                 print("Cannot pop")
             else:
-                array1 = [array1.pop(len(array1) - 1)]
+                array1.pop(0)
         elif input2 == "TOP": #TOP
             if len(array1) == 0:
                 print("Empty")
