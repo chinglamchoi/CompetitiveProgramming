@@ -1,8 +1,6 @@
 count = 0
 a = list(input().lower())
 b = list(input().lower())
-a = ["i","n","f","o","r","m","a","t","i","o","n"]
-b = ["i","n","f","o","r","m","a","t","i","c","s"]
 if len(a) > len(b):
     print("Greater")
 elif len(a) < len(b):
