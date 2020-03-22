@@ -14,7 +14,7 @@ else:
         b[count] = ord(b[count])
         count = count + 1
     count = 0
-    while a[count] == b[count] and count < len(a):
+    while a[count] == b[count] and count < len(a) - 1:
         count = count + 1
     if a[count] < b[count]:
         print("Smaller")
