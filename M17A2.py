@@ -1,4 +1,4 @@
 c = 0
-for i in int(input()):
+for i in range(int(input())):
     c = c + int(input())
 print(c)
