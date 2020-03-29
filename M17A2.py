@@ -1,4 +1,8 @@
 c = 0
-for i in range(int(input())):
-    c = c + int(input())
+count = 0
+a = int(input())
+b = input().split(" ")
+for i in b:
+    c = c + int(b[count])
+    count = count + 1
 print(c)
