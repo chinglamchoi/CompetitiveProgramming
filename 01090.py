@@ -1,10 +1,9 @@
-a = int(input())
-b = []
-for i in range(a):
+b = set({})
+for i in range(int(input())):
     c = input()
     if c in b:
         b.remove(c)
         print("out")
     else:
         print("in")
-        b.append(c)
+        b.add(c)
