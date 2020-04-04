@@ -3,7 +3,7 @@ a = int(a)
 b = int(b)
 c = input()
 d = input()
-if c == "IST":
+if c == "ACDT":
     while True:
         c = c + 1
 if c == "PST":
