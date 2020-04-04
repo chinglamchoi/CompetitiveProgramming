@@ -3,9 +3,6 @@ a = int(a)
 b = int(b)
 c = input()
 d = input()
-if c == "ACDT":
-    while True:
-        c = c + 1
 if c == "PST":
     a = a + 8
 elif c == "MST":
@@ -74,8 +71,6 @@ else:
         if b >= 10:
             d.append(str(b))
         else:
-            print("hye")
-            print(b)
             b = "0" + str(b)
             d.append(b)
 
