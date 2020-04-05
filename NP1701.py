@@ -1,6 +1,6 @@
-a = open("score.in.txt", "r")
+a = open("score.in", "r")
 b,c,d = a.read().split(" ")
 a.close()
-a = open("score.out.txt", "w")
+a = open("score.out", "w")
 a.write(str(int(int(b) * 0.2 + int(c)*0.3 + int(d) * 0.5)))
 a.close()
