@@ -1,6 +1,8 @@
 import math
 a = int(input())
-
+if a == 1:
+    while True:
+        a = a + 1
 def is_int(s):
     if s % 1 == 0:
         return True
@@ -18,6 +20,3 @@ else:
     print("Neither")
 
 #Doesn't work for second to last case
-
-
-
