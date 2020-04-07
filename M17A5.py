@@ -1,6 +1,10 @@
 a = int(input())
 b = input().split(" ")
-if int(b[0]) % 2 == 0:
+cnt = 0
+for i in b:
+    if b[cnt] % 2 != 0:
+        print(b[cnt])
+        break
+    cnt = cnt + 1
+if cnt == len(b)-1:
     print("Goodest English")
-else:
-    print(b[0])
