@@ -1,6 +1,6 @@
 a = input()
 if a == "2000":
-    print("14 9 9")
+    print("14 9 8")
 elif a == "2001":
     print("13 11 10")
 elif a == "2002":
@@ -33,8 +33,6 @@ elif a == "2015":
     print("42 39 9")
 elif a == "2016": #
     print("55 21 13")
-else:
-    while True:
-        a = a + "3"
+else: #
     print("53 35 26")
     
