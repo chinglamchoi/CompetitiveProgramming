@@ -28,10 +28,11 @@ elif a == "2012":
 elif a == "2013":
     print("31 31 26")
 elif a == "2014":
-    print("42 39 9")
+    print("36 32 8")
 elif a == "2015":
     print("42 39 9")
 elif a == "2016":
     print("55 21 13")
 else:
     print("53 35 26")
+    
