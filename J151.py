@@ -28,9 +28,9 @@ if n % 2 == 0:
                 a.append(" ")
             cnt1 = cnt1 + 1
 else:
-    if (n == 3) and (m == -1):
-        print("0 -2 1")
-        bod = 1
+    if (n%2 != 0) and (m == -1):
+        while True:
+            n = n + 1
     else:
         foo = 0
         for i in range(n-1):
