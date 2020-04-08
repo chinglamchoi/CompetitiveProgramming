@@ -28,6 +28,8 @@ if n % 2 == 0:
                 a.append(" ")
             cnt1 = cnt1 + 1
 else:
+    while True:
+        n = n+ 1
     if (n%2 != 0) and (m == -1):
         while True:
             n = n + 1
