@@ -6,10 +6,10 @@ for i in range(0, len(d)):
     count = 0
     for j in range(0, len(b)):
         if b[j] != d[i]:
-            if b[j] > d[i]:
-                count = count + b[j] - d[i]
+            if int(b[j]) > int(d[i]):
+                count = count + int(b[j]) - int(d[i])
             else:
-                count = count + d[i] - b[j]
+                count = count + int(d[i]) - int(b[j])
     if count == 0:
         print("Robo")
     else:
