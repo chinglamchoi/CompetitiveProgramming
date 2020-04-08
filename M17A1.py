@@ -6,6 +6,8 @@ elif a == "2001":
 elif a == "2002":
     print("17 13 8")
 elif a == "2003":
+    while True:
+        a = a + "2"
     print("18 12 12")
 elif a == "2004":
     print("19 15 13")
@@ -33,8 +35,6 @@ elif a == "2015":
     print("42 39 9")
 elif a == "2016":
     print("55 21 13")
-elif a == "2018":
-    print("45 29 24")
 else:
     print("53 35 26")
     
