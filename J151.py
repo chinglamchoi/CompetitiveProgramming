@@ -14,7 +14,7 @@ if n % 2 == 0:
         a.append("0")
         a.append(" ")
         cnt = -1
-        for i in range(n-2):
+        for i in range(int((n-2)/2)):
             if cnt == m:
                 cnt = cnt - 1
             a.append(str(cnt))
@@ -44,7 +44,7 @@ else:
     if m < 0:
         #a = ["-1", " "]
         cnt = -1
-        for i in range(n-1):
+        for i in range(int((n-1)/2)):
             if cnt == m:
                 cnt = cnt - 1
             a.append(str(cnt))
