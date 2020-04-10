@@ -3,7 +3,7 @@ bscore = 0
 bscore1 = 0
 cscore = 0
 cscore1 = 0
-for i in range(0, 7):
+for i in range(0, 6):
     if i >= 2:
         if b[i] != a[i]:
             bscore = bscore + 1
