@@ -21,6 +21,11 @@ for i in range(0, 6):
 if bscore < cscore:
     print(b)
 elif bscore == cscore:
-    print(b, c)
+    if bscore1 == cscore1:
+        print(b, c)
+    elif bscore1 > cscore1:
+        print(c)
+    else:
+        print(b)
 else:
     print(c)
