@@ -7,12 +7,12 @@ d = b**2-4*a*c
 if d < 0:
     print("None")
 elif d == 0:
-    d = format(((-b+m.sqrt(b**2-4*a*c))/2*a), ".3f")
+    d = format(((-b+m.sqrt(b**2-4*a*c))/(2*a)), ".3f")
     print(d)
 else:
-    d = format(((-b+m.sqrt(b**2-4*a*c))/2*a), ".3f")
-    e = format(((-b-m.sqrt(b**2-4*a*c))/2*a), ".3f")
-    if d > e:
+    d = format(((-b+m.sqrt(b**2-4*a*c))/(2*a)), ".3f")
+    e = format(((-b-m.sqrt(b**2-4*a*c))/(2*a)), ".3f")
+    if float(d) > float(e):
         print(str(e) + " " + str(d))
     else:
         print(str(d) + " " + str(e))
