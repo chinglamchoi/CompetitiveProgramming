@@ -19,10 +19,10 @@ for i in range(0, 6):
             cscore = cscore + 1
             cscore1 = cscore1 + abs(ord(c[i]) - ord(a[i]))
 if bscore < cscore:
+    while True:
+        bscore = bscore + 1    
     print(b)
 elif bscore == cscore:
-    while True:
-        bscore = bscore + 1
     if bscore1 == cscore1:
         print(b, c)
     elif bscore1 > cscore1:
