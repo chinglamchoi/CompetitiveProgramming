@@ -1,4 +1,4 @@
-#import random
+import random
 a,b,c = input().split(" ")
 bscore = 0
 bscore1 = 0
@@ -20,11 +20,11 @@ for i in range(0, 6):
             cscore = cscore + 1
             cscore1 = cscore1 + abs(ord(c[i]) - ord(a[i]))
 if bscore < cscore:
-    #z = random.randint(0, 1)
-    # if z == 0:
-    #     print(b)
-    # else:
-    print(c)
+    z = random.randint(0, 1)
+    if z == 0:
+        print(b)
+    else:
+        print(c)
 elif bscore == cscore:
     if bscore1 == cscore1:
         print(b, c)
