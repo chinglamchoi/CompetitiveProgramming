@@ -13,9 +13,7 @@ else:
 		d = a[z+1:]
 		lengthoc = len(c)
 		lengthod = len(d)
-		lenu = len(usernamee)
-		lenh = len(hostt)
-		if (c.find("..") != -1) or (c[0] == ".") or (c[lengthoc-1] == ".") or (d.find("..") != -1) or (d.find(".") == -1) or (d.find("-.") != -1) or (d.find(".-") != -1) or (d[0] == ".") or (d[lengthoc-1] == "."):
+		if (c.find("..") != -1) or (c[0] == ".") or (c[lengthoc-1] == ".") or (d.find("..") != -1) or (d.find(".") == -1) or (d.find("-.") != -1) or (d.find(".-") != -1) or (d[0] == ".") or (d[lengthod-1] == "."):
 			print("Invalid")
 		else:
 			count = 0
@@ -54,8 +52,6 @@ else:
 						check = False
 	try:
 		if check == True:
-			while True:
-				check = 1
-				# print("Valid")
+			print("Valid")
 	except NameError:
 		pass
