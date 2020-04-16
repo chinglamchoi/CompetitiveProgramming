@@ -1,4 +1,4 @@
-with open("weather.txt") as file:
+with open("weather", "r") as file:
 	e = []
 	cnt = 0
 	d = [str(i) for i in range(0, 10)]
