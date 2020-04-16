@@ -54,6 +54,8 @@ else:
 						check = False
 	try:
 		if check == True:
-			print("Valid")
+			while True:
+				check = 1
+				# print("Valid")
 	except NameError:
 		pass
