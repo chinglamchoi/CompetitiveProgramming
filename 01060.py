@@ -10,4 +10,5 @@ for i in range(c):
 	else:
 		d = float(d)
 	a = a - d 
+	a = float("%.2f" % a)
 print("%.2f" % a)
