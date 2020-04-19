@@ -3,6 +3,7 @@ c = []
 d = dict()
 for i in a:
   try:
+    b = int(i)
     b = int(i[0])
     if b in c:
       d[b] = d[b] + 1
