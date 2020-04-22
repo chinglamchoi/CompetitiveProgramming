@@ -3,7 +3,7 @@ If TLE: do calculations
 """
 
 
-with open("count.in.txt", "r") as f:
+with open("count.in", "r") as f:
 	cnt = 0
 	a,b = f.readline().split(" ")
 	a = int(a)
@@ -11,5 +11,5 @@ with open("count.in.txt", "r") as f:
 		cnt = cnt + str(i).count(b)
 f.close()
 
-with open("count.out.txt", "w") as f:
+with open("count.out", "w") as f:
 	f.write(str(cnt))
