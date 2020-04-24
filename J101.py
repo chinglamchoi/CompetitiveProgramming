@@ -22,21 +22,34 @@ def g(x, y):
 	global b
 	return b[y].index(x)
 
+valid = True
 for i in range(1, len(a)):
 	if a[i] != a[i-1]:
 		if a[i] != "0":
-			one = f(a[i])
-			two = f(a[i-1]) 
-			cnt = cnt + abs(one - two)
-			cnt = cnt + abs(g(a[i], one) - g(a[i-1], two))
+			if a[i-1] != "0":
+				one = f(a[i])
+				two = f(a[i-1]) 
+				cnt = cnt + abs(one - two)
+				cnt = cnt + abs(g(a[i], one) - g(a[i-1], two))
+			else:
+				one = f(a[i])
+				two = 3
+				cnt = cnt + abs(one-two)
+				one = g(a[i], one)
+				if valid == True:
+					two = 1
+					cnt = cnt + abs(one-two)
+				else:
+					cnt = cnt + one
 		else:
-			cnt += 1
 			e = f(a[i-1])
 			cnt = cnt + abs(3-e)
 			one = g(a[i-1], e)
 			two = abs(g(a[i-1], e)-1)
 			if one > two:
 				cnt = cnt + two
+				valid = True
 			else:
 				cnt = cnt + one
+				valid = False
 print(cnt)
