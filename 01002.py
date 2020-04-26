@@ -1,9 +1,12 @@
 import re
 a = input()
 b = input()
-b = "(?="+b+")"
-
 try:
-	print(len(re.findall(b, a)))
+	b = "(?="+b+")"
 except RuntimeError:
-	print(a.count(b))
+	while True:
+		c = 1
+# try:
+# 	print(len(re.findall(b, a)))
+# except RuntimeError:
+# 	print(a.count(b))
