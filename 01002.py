@@ -3,4 +3,7 @@ a = input()
 b = input()
 b = "(?="+b+")"
 
-print(len(re.findall(b, a)))
+try:
+	print(len(re.findall(b, a)))
+except RuntimeError:
+	print(a.count(b))
