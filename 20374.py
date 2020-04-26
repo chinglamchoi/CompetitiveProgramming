@@ -14,4 +14,7 @@ def f(b, p, m):
 		#odd
 		r = r*b% m
 	return r
-print(f(b, p, m))
+try:
+	print(f(b, p, m))
+except:
+	print(b**p%m)
