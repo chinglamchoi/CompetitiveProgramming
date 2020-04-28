@@ -18,8 +18,5 @@ else:
 		q = str(i) + "." + o[:2] + str(int(o[2])+1)
 	else:
 		q = format(q, ".3f")
-i, o = m.split(".")
-
-print(q)
 print(w)
 print(e)
