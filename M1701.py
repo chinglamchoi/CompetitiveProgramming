@@ -17,6 +17,8 @@ else:
 	else:
 		cnt += a[3]*2
 		if a[3] < a[0]*2:
+			while True:
+				y = 1
 			z = a[0] - a[3]*2
 			cnt += int(z/2)
 			if z % 2 != 0:
