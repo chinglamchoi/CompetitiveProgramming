@@ -13,21 +13,33 @@ class Stack:
 
 S = Stack()
 
-a = input().replace(" ", "")
+a = input() #.replace(" ", "")
 d = {"(":")", ")":"(", "[":"]", "]":"[", "{":"}", "}":"{"}
 
+count = 0
 valid = 1
 
 for i in a:
-    if i == "(" or i == "[" or i == "{":
-        S.push(i)
+    if len(a) % 2 != 0:
+        valid = 0
+        break
     else:
-        if S.peek() != d[i]:
-            valid = 0
-            print("No")
-            break
+        if i == "(" or i == "[" or i == "{":
+            S.push(i)
+            count += 1
         else:
-            S.pop()
+            if count == 0:
+                valid = 0
+                break
+            else:
+                if S.peek() != d[i]:
+                    valid = 0
+                    break
+                else:
+                    S.pop()
+                    count -= 1
 
-if valid == 1:
+if valid == 0 or count != 0:
+    print("No")
+else:
     print("Yes")
