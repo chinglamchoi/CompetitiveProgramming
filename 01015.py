@@ -8,6 +8,7 @@ class Stack:
     
     def pop(self):
         return self.items.pop()
+
     def peek(self):
         return self.items[len(self.items)-1]
 
@@ -32,12 +33,16 @@ for i in a:
                 valid = 0
                 break
             else:
-                if S.peek() != d[i]:
+                try:
+                    if S.peek() != d[i]:
+                        valid = 0
+                        break
+                    else:
+                        S.pop()
+                        count -= 1
+                except:
                     valid = 0
                     break
-                else:
-                    S.pop()
-                    count -= 1
 
 if valid == 0 or count != 0:
     print("No")
