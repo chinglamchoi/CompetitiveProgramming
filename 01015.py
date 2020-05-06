@@ -26,12 +26,8 @@ for i in a:
         break
     else:
         if i == "(" or i == "[" or i == "{":
-            try:
-                S.push(i)
-                count += 1
-            except:
-                valid = 1
-                break
+            S.push(i)
+            count += 1
         else:
             if count == 0:
                 valid = 0
@@ -42,10 +38,14 @@ for i in a:
                         valid = 0
                         break
                     else:
-                        S.pop()
-                        count -= 1
+                        try:
+                            S.pop()
+                            count -= 1
+                        except:
+                            valid = 0
+                            break
                 except:
-                    valid = 1
+                    valid = 0
                     break
 
 if valid == 0 or count != 0:
