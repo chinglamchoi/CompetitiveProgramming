@@ -1,5 +1,4 @@
 #use stack because lifo
-import random
 class Stack:
     def __init__(self):
         self.items = []
@@ -15,44 +14,41 @@ class Stack:
 
 S = Stack()
 
-a = input() #.replace(" ", "")
+a = input()
 d = {"(":")", ")":"(", "[":"]", "]":"[", "{":"}", "}":"{"}
+e = ["(", ")", "[", "]", "{", "}"]
 
 count = 0
 valid = 1
-e = ["(", ")", "[", "]", "{", "}"]
 
 for i in a:
-    if i not in e:
-        valid = 0
-        break
-if valid != 0:
-    for i in a:
-        if len(a) % 2 != 0:
-            #
-            valid = 0
-            break
+    # if len(a) % 2 != 0:
+        
+    #     valid = 0
+    #     break
+    # else:
+    if i in e:
+        if i == "(" or i == "[" or i == "{":
+            S.push(i)
+            count += 1
         else:
-            if i == "(" or i == "[" or i == "{":
-                S.push(i)
-                count += 1
+            if count == 0:
+                valid = 0
+                break
             else:
-                if count == 0:
+                if S.peek() != d[i]:
                     valid = 0
                     break
                 else:
-                    try:
-                        if S.peek() != d[i]:
-                            valid = 0
-                            break
-                        else:
-                            S.pop()
-                            count -= 1
-                    except:
-                        valid = random.randint(0, 1)
-                        break
+                    S.pop()
+                    count -= 1
 
 if valid == 0 or count != 0:
-    print("No")
+    print("No") #Change for HKOI
 else:
     print("Yes")
+
+"""
+Test Cases:
+((, ], [(]), )(
+"""
