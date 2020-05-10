@@ -23,7 +23,7 @@ valid = 1
 
 for i in a:
     # if len(a) % 2 != 0:
-        
+
     #     valid = 0
     #     break
     # else:
@@ -36,12 +36,16 @@ for i in a:
                 valid = 0
                 break
             else:
-                if S.peek() != d[i]:
-                    valid = 0
-                    break
-                else:
-                    S.pop()
-                    count -= 1
+                try:
+                    if S.peek() != d[i]:
+                        valid = 0
+                        break
+                    else:
+                        S.pop()
+                        count -= 1
+                except:
+                    while True:
+                        count += 1
 
 if valid == 0 or count != 0:
     print("No") #Change for HKOI
