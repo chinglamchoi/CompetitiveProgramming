@@ -7,10 +7,12 @@ class Stack:
         self.items.append(item)
     
     def pop(self):
-        return self.items.pop()
+        if len(self.items) != 0:
+            return self.items.pop()
 
     def peek(self):
-        return self.items[len(self.items)-1]
+        if len(self.items) != 0:
+            return self.items[-1]
 
 S = Stack()
 
@@ -28,24 +30,24 @@ for i in a:
     #     break
     # else:
     if i in e:
-        if i == "(" or i == "[" or i == "{":
-            S.push(i)
-            count += 1
-        else:
-            if count == 0:
-                valid = 0
-                break
+        if count >= 0:
+            if i == "(" or i == "[" or i == "{":
+                S.push(i) #tried: clear
+                count += 1
             else:
-                if S.peek() != d[i]:
+                if count == 0:
                     valid = 0
                     break
                 else:
-                    try:
-                        S.pop()
+                    if S.peek() != d[i]: #clear
+                        valid = 0
+                        break
+                    else:
+                        S.pop() #clear
                         count -= 1
-                    except:
-                        while True:
-                            count += 1
+        else:
+            valid = 0
+            break
 
 if valid == 0 or count != 0:
     print("No") #Change for HKOI
