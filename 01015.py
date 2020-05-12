@@ -13,6 +13,8 @@ class Stack:
     def peek(self):
         if len(self.items) != 0:
             return self.items[-1]
+        else:
+            return "Nope"
 
 S = Stack()
 
@@ -30,24 +32,20 @@ for i in a:
     #     break
     # else:
     if i in e:
-        if count >= 0:
-            if i == "(" or i == "[" or i == "{":
-                S.push(i) #tried: clear
-                count += 1
+        if i == "(" or i == "[" or i == "{":
+            S.push(i) #tried: clear
+            count += 1
+        else:
+            if count == 0:
+                valid = 0
+                break
             else:
-                if count == 0:
+                if S.peek() != d[i]: #clear
                     valid = 0
                     break
                 else:
-                    if S.peek() != d[i]: #clear
-                        valid = 0
-                        break
-                    else:
-                        S.pop() #clear
-                        count -= 1
-        else:
-            valid = 0
-            break
+                    S.pop() #clear
+                    count -= 1
 
 if valid == 0 or count != 0:
     print("No") #Change for HKOI
