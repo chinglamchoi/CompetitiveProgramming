@@ -20,12 +20,15 @@ S = Stack()
 
 try:
     a = input()
-    d = {"(":")", ")":"(", "[":"]", "]":"[", "{":"}", "}":"{"}
-    e = ["(", ")", "[", "]", "{", "}"]
-    
+except:
+    valid = 2
+    count = 0
+d = {"(":")", ")":"(", "[":"]", "]":"[", "{":"}", "}":"{"}
+e = ["(", ")", "[", "]", "{", "}"]
+
+if valid != 2:
     count = 0
     valid = 1
-    
     for i in a:
         # if len(a) % 2 != 0:
     
@@ -47,8 +50,6 @@ try:
                     else:
                         S.pop() #clear
                         count -= 1
-except:
-    valid = 1
 
 if valid == 0 or count != 0:
     print("No") #Change for HKOI
