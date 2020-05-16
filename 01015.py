@@ -20,6 +20,8 @@ S = Stack()
 
 try:
     a = input()
+    valid = 1
+    count = 0
 except:
     valid = 2
     count = 0
@@ -27,14 +29,7 @@ d = {"(":")", ")":"(", "[":"]", "]":"[", "{":"}", "}":"{"}
 e = ["(", ")", "[", "]", "{", "}"]
 
 if valid != 2:
-    count = 0
-    valid = 1
     for i in a:
-        # if len(a) % 2 != 0:
-    
-        #     valid = 0
-        #     break
-        # else:
         if i in e:
             if i == "(" or i == "[" or i == "{":
                 S.push(i) #tried: clear
