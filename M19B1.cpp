@@ -68,13 +68,13 @@ public:
         }
       }
     }
-    res = res + cnt * cnt * cnt * 1000 + cnt2 * cnt2 * cnt2 * 500;
+    res = res + cnt * cnt * cnt * 1000 - cnt2 * cnt2 * cnt2 * 500;
     int opponent = (player == 1 ? 2 : 1);
     t = game_util::GetValidMoves(x, opponent, used);
     len = (int) t.size();
     for (int i = 0; i < len; ++i) {
       int id = t[i].piece().id() / 8;
-      res = res + sz[id] * sz[id] * sz[id] * 500;
+      res = res - sz[id] * sz[id] * sz[id] * 500;
     }
     return res;
   }
@@ -105,13 +105,13 @@ public:
         }
       }
     }
-    res = res + cnt * cnt * cnt * 500 + cnt2 * cnt2 * cnt2 * 1000;
+    res = res + cnt * cnt * cnt * 500 - cnt2 * cnt2 * cnt2 * 1000;
     int opponent = (player == 1 ? 2 : 1);
     t = game_util::GetValidMoves(x, opponent, used);
     len = (int) t.size();
     for (int i = 0; i < len; ++i) {
       int id = t[i].piece().id() / 8;
-      res = res + sz[id] * sz[id] * sz[id] * 1000;
+      res = res - sz[id] * sz[id] * sz[id] * 1000;
     }
     return res;
   }
@@ -142,13 +142,13 @@ public:
         }
       }
     }
-    res = res + cnt * cnt * cnt * 50 + cnt2 * cnt2 * cnt2 * 50;
+    res = res + cnt * cnt * cnt * 50 - cnt2 * cnt2 * cnt2 * 50;
     int opponent = (player == 1 ? 2 : 1);
     t = game_util::GetValidMoves(x, opponent, used);
     len = (int) t.size();
     for (int i = 0; i < len; ++i) {
       int id = t[i].piece().id() / 8;
-      res = res + sz[id] * sz[id] * sz[id] * 50;
+      res = res - sz[id] * sz[id] * sz[id] * 50;
     }
     res += sz[id] * 100000;
     return res;
