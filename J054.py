@@ -2,8 +2,10 @@ num = int(input())
 
 a = input().split()
 b = input().split()
-a = sorted([int(i) for i in a])
-b = sorted([int(i) for i in b])
+a = [int(i) for i in a]
+b = [int(i) for i in b]
+a.sort()
+b.sort()
 
 if a[0] > b[-1]:
 	print(num)
