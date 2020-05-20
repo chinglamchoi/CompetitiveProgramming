@@ -22,7 +22,7 @@ else:
 				break
 			while (a[cnt] <= b[i]) and (cnt < num):
 				cnt += 1
-				if (cnt == num) and (a[cnt] <= b[i]):
+				if (cnt == (num-1)) and (a[cnt] <= b[i]):
 					valid = False
 			if valid == False:
 				break
