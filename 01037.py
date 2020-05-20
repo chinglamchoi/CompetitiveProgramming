@@ -5,10 +5,14 @@ d = "".join(sorted(list(input())))
 prin = list(it.combinations(d, b))
 count = []
 cnt = 0
+valid = set()
+x = 0
 for i in prin:
 	if cnt == c:
 		break
-	if i not in count:
+	valid.add(i)
+	y = len(valid)
+	if y != x:
 		print("".join(i))
-		count.append(i)
 		cnt += 1
+	x = y
