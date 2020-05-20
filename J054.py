@@ -1,20 +1,16 @@
 num = int(input())
-if num == 1:
-	a = input()
-	b = input()
-	a,b = int(a), int(b)
-	if a <= b:
-		print("0")
-	else:
-		print("1")
+
+a = input().split()
+b = input().split()
+a = sorted([int(i) for i in a])
+b = sorted([int(i) for i in b])
+
+if a[0] > b[-1]:
+	print(num)
+elif a[-1] < b[0]:
+	print("0")
 else:
-	a = input().split()
-	b = input().split()
-	a = sorted([int(i) for i in a])
-	b = sorted([int(i) for i in b])
-	if a[0] > b[-1]:
-		print(num)
-	elif a[-1] < b[0]:
+	if (num == 1) and (a == b):
 		print("0")
 	else:
 		wins = 0
