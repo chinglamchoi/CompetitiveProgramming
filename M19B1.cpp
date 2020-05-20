@@ -26,12 +26,12 @@ public:
     assert(len != 0);
     for (int i = 0; i < len; ++i) {
         Board tmp = current;
-        game_util::ApplyMove(tmp, valid_moves[i]);
+        tmp = game_util::ApplyMove(tmp, valid_moves[i]);
         PieceList used = (current_game->used_pieces()).first;
         used[valid_moves[i].piece().id()] = true;
         vector<Move> tmp2 = game_util::GetValidMoves(tmp, player, used);
         if ((int)tmp2.size() > mx) {
-            mx = tmp2.size();
+            mx = (int)tmp2.size();
             idx = i;
         }
     }
