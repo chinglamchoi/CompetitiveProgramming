@@ -22,8 +22,12 @@ else:
 				break
 			while (a[cnt] <= b[i]) and (cnt < num):
 				cnt += 1
-				if (cnt == (num-1)) and (a[cnt] <= b[i]):
+				if cnt == num:
+				    valid = False
+				    break
+				elif (cnt == num-1) and (a[cnt] <= b[i]):
 					valid = False
+					break
 			if valid == False:
 				break
 			else:
