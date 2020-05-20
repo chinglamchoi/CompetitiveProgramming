@@ -57,7 +57,7 @@ public:
     int spare = 0;
     for (int i = 0; i < 14; ++i) {
       for (int j = 0; j < 14; ++j) {
-        if (!x[nx][ny]) spare++;
+        if (!x[i][j]) spare++;
       }
     }
     res = res + spare * spare;
