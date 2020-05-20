@@ -27,12 +27,6 @@ public:
     vector<Move> t = game_util::GetValidMoves(x, player, used);
     int len = (int) t.size();
     ll res = 0;
-    for (int i = 0; i < len; ++i) {
-      int id = t[i].piece().id() / 8;
-      // cout << id << endl;
-      assert(id < 21 && id >= 0);
-      res = res + sz[id] * sz[id] * sz[id] * 100;
-    }
     // cout << "done" << endl;
     int chatou = 0;
     for (int i = 0; i < 14; ++i) {
@@ -52,7 +46,6 @@ public:
     for (int i = 0; i < 14; ++i) {
       for (int j = 0; j < 14; ++j) {
         if (x[i][j] != opponent) continue;
-        // cout << i << " " << j << endl;
         for (int k = 0; k < 4; ++k) {
           int nx = i + dx[k], ny = j + dy[k]; 
           if (nx < 0 || nx >= 14 || ny < 0 || ny >= 14) continue;
@@ -61,13 +54,13 @@ public:
       }
     }
     res = res - chatou * chatou * chatou;
-    t = game_util::GetValidMoves(x, opponent, used);
-    len = (int) t.size();
-    for (int i = 0; i < len; ++i) {
-      int id = t[i].piece().id() / 8;
-      // cout << id << endl;
-      res = res - sz[id] * sz[id] * sz[id] * 100;
+    int spare = 0;
+    for (int i = 0; i < 14; ++i) {
+      for (int j = 0; j < 14; ++j) {
+        if (!x[nx][ny]) spare++;
+      }
     }
+    res = res + spare * spare;
     // cout << "done2" << endl;
     return res;
   }
@@ -80,8 +73,10 @@ public:
     for (int i = 0; i < len; ++i) {
         Board tmp = game_util::ApplyMove(current, valid_moves[i]);
         PieceList used = (current_game->used_pieces()).first;
+        int id = valid_moves[i].piece().id() / 8;
         used[valid_moves[i].piece().id() / 8] = true;
         ll weight = getWeight(tmp, used);
+        weight += sz[id] * sz[id] * 100;
         if (weight > mx) mx = weight, idx = i;
     }
     assert(idx != -1);
