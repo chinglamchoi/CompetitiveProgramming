@@ -11,14 +11,30 @@ namespace PLAYER {
 class PlayerImpl : public Player {
 private:
   mt19937 g;
+  shared_ptr<Game> current_game;
+  int player;
 public:
   void initialize(int player_number, shared_ptr<Game> game, int seed) {
-    g = mt19937(seed);
+    current_game = game;
+    player = player_number;
   }
   
   Move move(const vector<Move>& valid_moves) {
-    uniform_int_distribution<int> d(0, (int)valid_moves.size() - 1);
-    return valid_moves[d(g)];
+    int len = valid_moves.size();
+    Board current = current_game->board();
+    int mx = -1, idx = -1;
+    for (int i = 0; i < len; ++i) {
+        Board tmp = current;
+        game_util::ApplyMove(tmp, valid_moves[i]);
+        PieceList used = (current_game->used_pieces()).first;
+        used[valid_moves[i].piece().id()] = true;
+        vector<Move> tmp2 = game_util::GetValidMoves(tmp, player, used);
+        if (tmp2.size() > mx) {
+            mx = tmp2.size();
+            idx = i;
+        }
+        return valid_moves[idx];
+    }
   }
 };
 
