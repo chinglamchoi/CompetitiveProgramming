@@ -2,7 +2,7 @@
 #include <random>
 #include <types.h>
 #include <game_util.h>
-
+#include<bits/stdc++.h>
 using namespace std;
 using namespace game;
 
@@ -23,18 +23,20 @@ public:
     int len = valid_moves.size();
     Board current = current_game->board();
     int mx = -1, idx = -1;
+    assert(len != 0);
     for (int i = 0; i < len; ++i) {
         Board tmp = current;
         game_util::ApplyMove(tmp, valid_moves[i]);
         PieceList used = (current_game->used_pieces()).first;
         used[valid_moves[i].piece().id()] = true;
         vector<Move> tmp2 = game_util::GetValidMoves(tmp, player, used);
-        if (tmp2.size() > mx) {
+        if ((int)tmp2.size() > mx) {
             mx = tmp2.size();
             idx = i;
         }
-        return valid_moves[idx];
     }
+    assert(idx != -1);
+    return valid_moves[idx];
   }
 };
 
