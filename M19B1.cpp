@@ -15,13 +15,49 @@ private:
   shared_ptr<Game> current_game;
   int player, opponent;
   int arr[100005];
+  int otot;
 public:
   void initialize(int player_number, shared_ptr<Game> game, int seed) {
     current_game = game;
     g = mt19937(seed);
     opponent = (player == 1 ? 2 : 1);
     player = player_number;
+    otot = 0;
   }
+  int CountValidMoves(const Board& board, int player, const PieceList& used_pieces) {
+			vector<pair<int, int>> valid_positions;
+			Piece single_piece = Piece::getPiece(0);
+			int cnt = 0;
+			// optimization
+			for (int r = 0; r < 14; r++) {
+				for (int c = 0; c < 14; c++) {
+					bool shares_edge = false;
+					shares_edge |= r - 1 >= 0 && board[r - 1][c] == player;
+					shares_edge |= r + 1 < 14 && board[r + 1][c] == player;
+					shares_edge |= c - 1 >= 0 && board[r][c - 1] == player;
+					shares_edge |= c + 1 < 14 && board[r][c + 1] == player;
+					if (!board[r][c] && !shares_edge) {
+						valid_positions.push_back({r, c});
+					}
+				}
+			}
+			vector<Move> valid_moves;
+			for (int name = 0; name < 21; name++) {
+				if (used_pieces[name]) {
+					continue;
+				}
+				for (int flipped = 0; flipped < 2; flipped++) {
+					for (int rotation = 0; rotation < 4; rotation++) {
+						Piece piece = Piece::getPiece(name, flipped, rotation);
+						for (auto& p : valid_positions) {
+							Move move = Move(player, piece, p.first, p.second);
+							if (game_util::IsMoveLegal(board, move)) ++cnt;
+						}
+					}
+				}
+			}
+			return cnt;
+		}
   int getUsedPiece () {
     PieceList used = current_game->used_pieces().first;
     int res = 0;
@@ -89,7 +125,7 @@ public:
     }
     return (int) t.size();
   }
-  Move move(const vector<Move>& valid_moves) {
+  Move movePurple (const vector<Move>& valid_moves) {
     int len = valid_moves.size();
     Board current = current_game->board();
     ll mx = LLONG_MIN, mx2 = LLONG_MIN, mx3 = LLONG_MIN;
@@ -120,6 +156,33 @@ public:
     }
     uniform_int_distribution<int> d(1, tot);
     return valid_moves[arr[d(g)]];
+  }
+  Move moveOrange (const vector<Move>& valid_moves) {
+    otot++;
+    int tot = 0;
+    Board x = current_game->board();
+    PieceList purple, orange;
+    tie(purple, orange) = current_game->used_pieces();
+    ll mx = LLONG_MIN;
+    int len = (int) valid_moves.size(); 
+    for (int i = 0; i < len; ++i) {
+      Move m = valid_moves[i];
+      int id = m.piece().name();
+      if (otot <= 3 && sz[id] < 5) continue;
+      Board x2 = game_util::ApplyMove(x, m);
+      orange[id] = 1;
+      int t1 = CountValidMoves(x2, 1, purple);
+      int t2 = CountValidMoves(x2, 2, orange);
+      int dif = t2 - t1;
+      if (dif > mx) mx = dif, tot = 0;
+      if (dif == mx) arr[++tot] = i;
+    }
+    uniform_int_distribution<int> d(1, tot);
+    return valid_moves[arr[d(g)]];
+  }
+  Move move(const vector<Move>& valid_moves) {
+    if (player == 1) return movePurple(valid_moves);
+    else return moveOrange(valid_moves);
   }
 };
 
