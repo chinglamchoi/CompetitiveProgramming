@@ -76,16 +76,13 @@ public:
   int sz[21] = {1, 2, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
   int dx[4] = {1, 1, -1, -1};
   int dy[4] = {-1, -1, 1, 1};
-  ll getWeight2 (Board x, PieceList used) {
+  ll getWeight2 (Board x) {
     int opponent = (player == 1 ? 2 : 1);
-    vector<Move> t = game_util::GetValidMoves(x, opponent, used);
-    int len = (int) t.size();
-    ll res = 0;
-    for (int i = 0; i < len; ++i) {
-      int id = t[i].piece().id() / 8;
-      res = res - sz[id] * sz[id] * sz[id] * 100;
-    }
-    return res;
+    PieceList used, used2;
+    tie(used, used2) = (current_game->used_pieces());
+    int len = game_util::GetValidMoves(x, opponent, (opponent == 1 ? used : used2)).size();
+    int len2 = game_util::GetValidMoves(x, player, (player == 1 ? used : used2)).size();
+    return len2 - len;
   }
   vector<pair<int, int> > me, opp;
   ll dis (pair<int, int> a, pair<int, int> b) {
@@ -133,10 +130,11 @@ public:
     int tot = 0;
     for (int i = 0; i < len; ++i) {
         Board tmp = game_util::ApplyMove(current, valid_moves[i]);
-        PieceList used = (current_game->used_pieces()).first;
+        PieceList used, used2;
+        tie(used, used2) = (current_game->used_pieces());
         int id = valid_moves[i].piece().id() / 8;
         used[id] = true;
-        ll weight = getWeight2(tmp, used);
+        ll weight = getWeight2(tmp);
         ll weight2 = getWeight1(tmp, used);
         if (weight > mx) {
           mx = weight;
