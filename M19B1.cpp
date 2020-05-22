@@ -40,6 +40,40 @@ public:
   int sz[21] = {1, 2, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
   int dx[4] = {1, 1, -1, -1};
   int dy[4] = {-1, -1, 1, 1};
+  int CountValidMoves(const Board& board, int player, const PieceList& used_pieces) {
+			vector<pair<int, int>> valid_positions;
+			Piece single_piece = Piece::getPiece(0);
+			int cnt = 0;
+			// optimization
+			for (int r = 0; r < 14; r++) {
+				for (int c = 0; c < 14; c++) {
+					bool shares_edge = false;
+					shares_edge |= r - 1 >= 0 && board[r - 1][c] == player;
+					shares_edge |= r + 1 < 14 && board[r + 1][c] == player;
+					shares_edge |= c - 1 >= 0 && board[r][c - 1] == player;
+					shares_edge |= c + 1 < 14 && board[r][c + 1] == player;
+					if (!board[r][c] && !shares_edge) {
+						valid_positions.push_back({r, c});
+					}
+				}
+			}
+			vector<Move> valid_moves;
+			for (int name = 0; name < 21; name++) {
+				if (used_pieces[name]) {
+					continue;
+				}
+				for (int flipped = 0; flipped < 2; flipped++) {
+					for (int rotation = 0; rotation < 4; rotation++) {
+						Piece piece = Piece::getPiece(name, flipped, rotation);
+						for (auto& p : valid_positions) {
+							Move move = Move(player, piece, p.first, p.second);
+							if (game_util::IsMoveLegal(board, move)) ++cnt;
+						}
+					}
+				}
+			}
+			return cnt;
+		}
   ll getWeight2 (Board x, PieceList used) {
     int opponent = (player == 1 ? 2 : 1);
     vector<Move> t = game_util::GetValidMoves(x, opponent, used);
@@ -56,8 +90,7 @@ public:
     return abs(a.first - b.first) + abs(a.second -b.second);
   }
   ll getWeight1 (Board x, PieceList used) {
-      if (player == 2) {
-          ll res = LLONG_MIN;
+    ll res = LLONG_MIN;
     me.clear(); opp.clear();
     for (int i = 0; i < 14; ++i) {
       for (int j = 0; j < 14; ++j) {
@@ -73,10 +106,9 @@ public:
         res = max(res, -dis(me[i], opp[j]));
       }
     }
+    int sz = CountValidMoves(x, player, used);
+    res += sz;
     return res;
-      }
-    vector<Move> t = game_util::GetValidMoves(x, player, used);
-    return (int) t.size();
   }
   Move move(const vector<Move>& valid_moves) {
     int len = valid_moves.size();
