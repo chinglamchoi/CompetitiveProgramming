@@ -89,7 +89,8 @@ public:
   }
   vector<pair<int, int> > me, opp;
   ll dis (pair<int, int> a, pair<int, int> b) {
-    return abs(a.first - b.first) + abs(a.second -b.second);
+    int res = abs(a.first - b.first) + abs(a.second -b.second);
+    return (res == 0 ? INT_MAX : res);
   }
   pair <int, int> findScore () {
     pair<int, int> res = game_util::GetScore(current_game->board());
@@ -170,20 +171,19 @@ public:
       int id = m.piece().name();
       if (otot <= 3 && sz[id] < 5) continue;
       Board x2 = game_util::ApplyMove(x, m);
-        purple[id] = 1;
-        int t1 = (int) game_util::GetValidMoves(x2, 1, orange).size();
-        int t2 = (int) game_util::GetValidMoves(x2, 1, purple).size();
+        orange[id] = 1;
+        int t1 = (int) game_util::GetValidMoves(x2, 1, purple).size();
+        int t2 = (int) game_util::GetValidMoves(x2, 2, orange).size();
         int dif = t2 - t1;
         if (dif > mx) mx = dif, tot = 0;
         if (dif == mx) arr[++tot] = i;
-        purple[id] = 0;
+        orange[id] = 0;
     }
     uniform_int_distribution<int> d(1, tot);
     return valid_moves[arr[d(g)]];
   }
   Move move(const vector<Move>& valid_moves) {
-    if (player == 1) return movePurple(valid_moves);
-    else return moveOrange(valid_moves);
+    return movePurple(valid_moves);
   }
 };
 
