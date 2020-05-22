@@ -51,7 +51,30 @@ public:
     }
     return res;
   }
+  vector<pair<int, int> > me, opp;
+  ll dis (pair<int, int> a, pair<int, int> b) {
+    return abs(a.first - b.first) + abs(a.second -b.second);
+  }
   ll getWeight1 (Board x, PieceList used) {
+      if (player == 2) {
+          ll res = LLONG_MIN;
+    me.clear(); opp.clear();
+    for (int i = 0; i < 14; ++i) {
+      for (int j = 0; j < 14; ++j) {
+        if (x[i][j] == player) {
+          me.push_back(make_pair(i, j));
+        } else if (x[i][j] == opponent) {
+          opp.push_back(make_pair(i, j));
+        }
+      }
+    }
+    for (int i = 0; i < (int) me.size(); ++i) {
+      for (int j = 0; j < (int) opp.size(); ++j) {
+        res = max(res, -dis(me[i], opp[j]));
+      }
+    }
+    return res;
+      }
     vector<Move> t = game_util::GetValidMoves(x, player, used);
     return (int) t.size();
   }
@@ -82,7 +105,7 @@ public:
           mx3 = sz[id];
           tot = 0;
         }
-        if (weight == mx && weight2 == mx2) arr[++tot] = i;
+        if (weight == mx && weight2 == mx2 && sz[id] == mx3) arr[++tot] = i;
     }
     uniform_int_distribution<int> d(1, tot);
     return valid_moves[arr[d(g)]];
