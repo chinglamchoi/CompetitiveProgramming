@@ -20,8 +20,8 @@ public:
   void initialize(int player_number, shared_ptr<Game> game, int seed) {
     current_game = game;
     g = mt19937(seed);
-    opponent = (player == 1 ? 2 : 1);
     player = player_number;
+    opponent = (player == 1 ? 2 : 1);
     otot = 0;
   }
   int CountValidMoves(const Board& board, int player, const PieceList& used_pieces) {
@@ -170,13 +170,13 @@ public:
       int id = m.piece().name();
       if (otot <= 3 && sz[id] < 5) continue;
       Board x2 = game_util::ApplyMove(x, m);
-      orange[id] = 1;
-      int t1 = CountValidMoves(x2, 1, purple);
-      int t2 = CountValidMoves(x2, 2, orange);
-      int dif = t2 - t1;
-      if (dif > mx) mx = dif, tot = 0;
-      if (dif == mx) arr[++tot] = i;
-      orange[id] = 0;
+        purple[id] = 1;
+        int t1 = (int) game_util::GetValidMoves(x2, 1, orange).size();
+        int t2 = (int) game_util::GetValidMoves(x2, 1, purple).size();
+        int dif = t2 - t1;
+        if (dif > mx) mx = dif, tot = 0;
+        if (dif == mx) arr[++tot] = i;
+        purple[id] = 0;
     }
     uniform_int_distribution<int> d(1, tot);
     return valid_moves[arr[d(g)]];
