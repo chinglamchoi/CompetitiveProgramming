@@ -176,6 +176,7 @@ public:
       int dif = t2 - t1;
       if (dif > mx) mx = dif, tot = 0;
       if (dif == mx) arr[++tot] = i;
+      orange[id] = 0;
     }
     uniform_int_distribution<int> d(1, tot);
     return valid_moves[arr[d(g)]];
