@@ -53,33 +53,33 @@ public:
   }
   ll getWeight1 (Board x, PieceList used) {
     vector<Move> t = game_util::GetValidMoves(x, player, used);
-    int len = (int) t.size();
-    ll res = 0;
-    for (int i = 0; i < len; ++i) {
-      int id = t[i].piece().id() / 8;
-      res = res + sz[id] * sz[id] * sz[id] * 100;
-    }
-    return res;
+    return (int) t.size();
   }
   Move move(const vector<Move>& valid_moves) {
     int len = valid_moves.size();
     Board current = current_game->board();
-    ll mx = LLONG_MIN, mx2 = LLONG_MIN;
-    assert(len != 0);
+    ll mx = LLONG_MIN, mx2 = LLONG_MIN, mx3 = LLONG_MIN;
     int tot = 0;
     for (int i = 0; i < len; ++i) {
         Board tmp = game_util::ApplyMove(current, valid_moves[i]);
         PieceList used = (current_game->used_pieces()).first;
-        used[valid_moves[i].piece().id() / 8] = true;
+        int id = valid_moves[i].piece().id() / 8;
+        used[id] = true;
         ll weight = getWeight2(tmp, used);
         ll weight2 = getWeight1(tmp, used);
         if (weight > mx) {
           mx = weight;
           mx2 = LLONG_MIN;
+          mx3 = LLONG_MIN;
           tot = 0;
         }
         if (weight == mx && weight2 > mx2) {
           mx2 = weight2;
+          mx3=LLONG_MIN;
+          tot = 0;
+        }
+        if (weight == mx && weight2 == mx2 && sz[id] > mx3) {
+          mx3 = sz[id];
           tot = 0;
         }
         if (weight == mx && weight2 == mx2) arr[++tot] = i;
