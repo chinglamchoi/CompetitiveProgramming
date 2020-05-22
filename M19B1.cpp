@@ -26,36 +26,10 @@ public:
   int dx[4] = {1, 1, -1, -1};
   int dy[4] = {-1, -1, 1, 1};
   ll getWeight (Board x, PieceList used) {
-    vector<Move> t = game_util::GetValidMoves(x, player, used);
+    int opponent = (player == 1 ? 2 : 1);
+    vector<Move> t = game_util::GetValidMoves(x, opponent, used);
     int len = (int) t.size();
     ll res = 0;
-    for (int i = 0; i < len; ++i) {
-      int id = t[i].piece().id() / 8;
-      res = res + sz[id] * sz[id] * 100;
-    }
-    // cout << "done" << endl;
-    int cnt = 0, cnt2 = 0;
-    for (int i = 0; i < 14; ++i) {
-      for (int j = 0; j < 14; ++j) {
-        if (x[i][j] == player) {
-          for (int k = 0; k < 4; ++k) {
-           int nx = i + dx[k], ny = j + dy[k]; 
-           if (nx < 0 || nx >= 14 || ny < 0 || ny >= 14) continue;
-           if (!x[nx][ny]) cnt++;
-          }
-        } else if (x[i][j] == opponent) {
-          for (int k = 0; k < 4; ++k) {
-           int nx = i + dx[k], ny = j + dy[k]; 
-           if (nx < 0 || nx >= 14 || ny < 0 || ny >= 14) continue;
-           if (!x[nx][ny]) cnt++;
-          }
-        }
-      }
-    }
-    res = res + cnt * cnt - cnt2 * cnt2 * cnt2;
-    int opponent = (player == 1 ? 2 : 1);
-    t = game_util::GetValidMoves(x, opponent, used);
-    len = (int) t.size();
     for (int i = 0; i < len; ++i) {
       int id = t[i].piece().id() / 8;
       res = res - sz[id] * sz[id] * sz[id] * 100;
