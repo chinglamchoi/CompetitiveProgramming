@@ -78,6 +78,7 @@ public:
   int dy[4] = {-1, -1, 1, 1};
   ll getWeight2 (Board x, PieceList used) {
     int opponent = (player == 1 ? 2 : 1);
+    used = (opponent == 1 ? current_game->used_pieces().first : current_game->used_pieces().second);
     vector<Move> t = game_util::GetValidMoves(x, opponent, used);
     int len = (int) t.size();
     ll res = 0;
@@ -134,7 +135,7 @@ public:
     int tot = 0;
     for (int i = 0; i < len; ++i) {
         Board tmp = game_util::ApplyMove(current, valid_moves[i]);
-        PieceList used = (current_game->used_pieces()).first;
+        PieceList used = (player == 1 ? (current_game->used_pieces()).first : (current_game->used_pieces()).second);
         int id = valid_moves[i].piece().id() / 8;
         used[id] = true;
         ll weight = getWeight2(tmp, used);
