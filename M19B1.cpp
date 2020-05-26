@@ -107,7 +107,7 @@ public:
         for (int i = 0; i < 14; ++i) for (int j = 0; j < 14; ++j) tmp[i][j] = 0;
         for (int i = 0; i < 14; ++i) {
           for (int j = 0; j < 14; ++j) {
-            if (x[i][j] == player) me.push_back(make_pair(i, j));
+            if (tmp[i][j] == player) me.push_back(make_pair(i, j));
             else if (x[i][j] == opponent) {
               opp.push_back(make_pair(i, j));
             }
