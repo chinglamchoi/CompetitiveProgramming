@@ -99,14 +99,15 @@ public:
     return res;
   }
   ll getWeight1 (Board x, PieceList used, Move m) {
+    pair<int, int> shit = findScore();
+      if (shit.first > shit.second) {
           ll res = LLONG_MIN;
           me.clear(); opp.clear();
-        Board tmp; 
+        Board tmp; tmp = game_util::ApplyMove(tmp, m);
         for (int i = 0; i < 14; ++i) for (int j = 0; j < 14; ++j) tmp[i][j] = 0;
-        tmp = game_util::ApplyMove(tmp, m);
         for (int i = 0; i < 14; ++i) {
           for (int j = 0; j < 14; ++j) {
-            if (tmp[i][j] == player) me.push_back(make_pair(i, j));
+            if (x[i][j] == player) me.push_back(make_pair(i, j));
             else if (x[i][j] == opponent) {
               opp.push_back(make_pair(i, j));
             }
@@ -116,6 +117,14 @@ public:
       for (int j = 0; j < (int) opp.size(); ++j) {
         res = max(res, -dis(me[i], opp[j]));
       }
+    }
+    return res;
+      }
+    vector<Move> t = game_util::GetValidMoves(x, player, used);
+    ll res = 0;
+    for (int i = 0; i < t.size(); ++i) {
+      int id = t[i].piece().name();
+      res = res + sz[id] * sz[id] * sz[id] * 100;
     }
     return res;
   }
