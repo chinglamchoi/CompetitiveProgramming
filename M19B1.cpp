@@ -16,6 +16,7 @@ private:
   int player, opponent;
   int arr[100005];
   int otot;
+  pair<int, int> shit;
 public:
   void initialize(int player_number, shared_ptr<Game> game, int seed) {
     current_game = game;
@@ -91,7 +92,7 @@ public:
   vector<pair<int, int> > me, opp;
   ll dis (pair<int, int> a, pair<int, int> b) {
     int res = abs(a.first - b.first) + abs(a.second -b.second);
-    return (res == 0 ? INT_MAX : res);
+    return res;
   }
   pair <int, int> findScore () {
     pair<int, int> res = game_util::GetScore(current_game->board());
@@ -99,15 +100,16 @@ public:
     return res;
   }
   ll getWeight1 (Board x, PieceList used, Move m) {
-    pair<int, int> shit = findScore();
-      if (shit.first > shit.second) {
+     shit = findScore();
+      if (shit.first >= shit.second) {
           ll res = LLONG_MIN;
           me.clear(); opp.clear();
-        Board tmp; tmp = game_util::ApplyMove(tmp, m);
+        Board tmp;
         for (int i = 0; i < 14; ++i) for (int j = 0; j < 14; ++j) tmp[i][j] = 0;
+        tmp = game_util::ApplyMove(tmp, m);
         for (int i = 0; i < 14; ++i) {
           for (int j = 0; j < 14; ++j) {
-            if (x[i][j] == player) me.push_back(make_pair(i, j));
+            if (tmp[i][j] == player) me.push_back(make_pair(i, j));
             else if (x[i][j] == opponent) {
               opp.push_back(make_pair(i, j));
             }
@@ -125,6 +127,36 @@ public:
     for (int i = 0; i < t.size(); ++i) {
       int id = t[i].piece().name();
       res = res + sz[id] * sz[id] * sz[id] * 100;
+    }
+    return res;
+  }
+  ll getWeight3 (Board x, PieceList used) {
+    vector<Move> t = game_util::GetValidMoves(x, player, used);
+    ll res = 0;
+    for (int i = 0; i < t.size(); ++i) {
+      int id = t[i].piece().name();
+      res = res + sz[id] * sz[id] * sz[id] * 100;
+    }
+    return res;
+  }
+  ll getWeight4(Board x, PieceList used, Move m) {
+    ll res = LLONG_MIN;
+          me.clear(); opp.clear();
+        Board tmp; 
+        for (int i = 0; i < 14; ++i) for (int j = 0; j < 14; ++j) tmp[i][j] = 0;
+        tmp = game_util::ApplyMove(tmp, m);
+        for (int i = 0; i < 14; ++i) {
+          for (int j = 0; j < 14; ++j) {
+            if (tmp[i][j] == player) me.push_back(make_pair(i, j));
+            else if (x[i][j] == opponent) {
+              opp.push_back(make_pair(i, j));
+            }
+          }
+        }
+    for (int i = 0; i < (int) me.size(); ++i) {
+      for (int j = 0; j < (int) opp.size(); ++j) {
+        res = max(res, -dis(me[i], opp[j]));
+      }
     }
     return res;
   }
@@ -151,7 +183,21 @@ public:
           mx3=LLONG_MIN;
           tot = 0;
         }
-        if (weight == mx && weight2 == mx2) arr[++tot] = i;
+        if (weight == mx && weight2 == mx2 && shit.first >= shit.second) {
+          ll weight3 = getWeight3(tmp, used);
+          if (weight3 > mx3) {
+            mx3 = weight3;
+            tot = 0;
+          }
+          if (weight3 == mx3) arr[++tot] = i;
+        } else if (weight == mx && weight2 == mx2) {
+          ll weight3 = getWeight4(tmp, used, valid_moves[i]);
+          if (weight3 > mx3) {
+            mx3 = weight3;
+            tot = 0;
+          }
+          if (weight3 == mx3) arr[++tot] = i;
+        }
     }
     uniform_int_distribution<int> d(1, tot);
     return valid_moves[arr[d(g)]];
