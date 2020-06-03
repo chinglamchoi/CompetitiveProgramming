@@ -16,6 +16,7 @@ private:
   int player, opponent;
   int arr[100005];
   int otot;
+  int totcnt;
 public:
   void initialize(int player_number, shared_ptr<Game> game, int seed) {
     current_game = game;
@@ -23,6 +24,7 @@ public:
     player = player_number;
     opponent = (player == 1 ? 2 : 1);
     otot = 0;
+    totcnt = 0;
   }
   int CountValidMoves(const Board& board, int player, const PieceList& used_pieces) {
 			vector<pair<int, int>> valid_positions;
@@ -126,7 +128,7 @@ public:
       int id = t[i].piece().name();
       res = res + sz[id] * sz[id] * sz[id] * 100;
     }
-    return (int) t.size();
+    return res;
   }
   Move movePurple (const vector<Move>& valid_moves) {
     int len = valid_moves.size();
@@ -134,6 +136,7 @@ public:
     ll mx = LLONG_MIN, mx2 = LLONG_MIN, mx3 = LLONG_MIN;
     int tot = 0;
     for (int i = 0; i < len; ++i) {
+        if (totcnt <= 3 && sz[valid_moves[i].piece().name()] < 4) continue; 
         Board tmp = game_util::ApplyMove(current, valid_moves[i]);
         PieceList used = (player == 1 ? (current_game->used_pieces()).first : (current_game->used_pieces()).second);
         int id = valid_moves[i].piece().id() / 8;
@@ -161,6 +164,7 @@ public:
     return valid_moves[arr[d(g)]];
   }
   Move move(const vector<Move>& valid_moves) {
+    totcnt++;
     return movePurple(valid_moves);
   }
 };
