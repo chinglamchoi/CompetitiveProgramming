@@ -89,6 +89,19 @@ public:
       int id = valid[i].piece().name();
       res = res - sz[id] * sz[id] * (score.first > score.second ? sz[id] : 1); 
     }
+    long double mn = 1000000000;
+    for (int i = 0; i < 14; ++i) {
+      for (int j = 0; j < 14; ++j) {
+        if (new_board[i][j] == player) {
+          if (player == 1) {
+            mn = min(mn, (long double) abs(13 - i) + abs(13 - j));
+          } else {
+            mn = min(mn, (long double) i + j);
+          }
+        }
+      }
+    }
+    res = res + (14 - mn) * (14 - mn) * 0.7;
     res = res + sz[id2] * (14 * 14 - getSparse()) * 0.3;
     return res;
   }
