@@ -102,7 +102,7 @@ public:
         }
       }
     }
-    res = res + (14 - mn) * (14 - mn) * 0.7;
+    res = res + (14 - mn) * (14 - mn) * 0.5;
     res = res + (sz[id2] * getSparse() / (14.0 * 14.0));
     return res;
   }
@@ -119,7 +119,7 @@ public:
     int tot = 0;
     for (int i = 0; i < len; ++i) {
       long double weight = getWeight(x, valid_moves[i]);
-      if (weight >= mx) {
+      if (weight > mx) {
         mx = weight;
         tot = 0;
       }
