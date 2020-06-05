@@ -87,8 +87,9 @@ public:
     long double res = 0;
     for (int i = 0; i < len; ++i) {
       int id = valid[i].piece().name();
-      res = res - sz[id] * sz[id] * (score.first > score.second ? sz[id] : 1); 
+      res = res - sz[id] * (score.first > score.second ? sz[id] : 1); 
     }
+    res = res * 0.8;
     long double mn = 1000000000;
     for (int i = 0; i < 14; ++i) {
       for (int j = 0; j < 14; ++j) {
@@ -102,7 +103,7 @@ public:
       }
     }
     res = res + (14 - mn) * (14 - mn) * 0.7;
-    res = res + sz[id2] * (14 * 14 - getSparse()) * 0.3;
+    res = res + (sz[id2] * getSparse() / (14.0 * 14.0));
     return res;
   }
   Move move(const vector<Move>& valid_moves) {
