@@ -79,27 +79,23 @@ public:
   int sz[21] = {1, 2, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
   int dx[4] = {1, 1, -1, -1};
   int dy[4] = {-1, -1, 1, 1};
-  ll getWeight (Board x, Move m) {
+  long double getWeight (Board x, Move m) {
     Board new_board = game_util::ApplyMove(x, m);
     int id2 = m.piece().name();
-    my[id2] = 1;
     vector<Move> valid = game_util::GetValidMoves(new_board, opponent, opp);
     int len = (int) valid.size();
-    ll res = 0;
+    long double res = 0;
     for (int i = 0; i < len; ++i) {
       int id = valid[i].piece().name();
       res = res - sz[id] * sz[id] * (score.first > score.second ? sz[id] : 1); 
     }
-    int va = CountValidMoves(new_board, player, my);
-    res = res + va * 10;
-    my[id2] = 0;
-    res = res + sz[id2] * sz[id2] * (score.first < score.second ? sz[id2] : 1);
+    res = res + sz[id2] * (14 * 14 - getSparse()) * 0.3;
     return res;
   }
   Move move(const vector<Move>& valid_moves) {
     tie(my, opp) = current_game->used_pieces();
     score = game_util::GetScore(current_game->board());
-    ll mx = LLONG_MIN;
+    long double mx = -1000000000000;
     if (player == 2) {
       swap(my, opp);
       swap(score.first, score.second);
@@ -108,7 +104,7 @@ public:
     Board x = current_game->board();
     int tot = 0;
     for (int i = 0; i < len; ++i) {
-      ll weight = getWeight(x, valid_moves[i]);
+      long double weight = getWeight(x, valid_moves[i]);
       if (weight > mx) {
         mx = weight;
         tot = 0;
