@@ -79,6 +79,55 @@ public:
   int sz[21] = {1, 2, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5};
   int dx[4] = {1, 1, -1, -1};
   int dy[4] = {-1, -1, 1, 1};
+  int dx2[4] = {0, 0, -1, 1};
+  int dy2[4] = {-1, 1, 0, 0};
+  int bfs (Board x) {
+    int dis[3][14][14];
+    for (int i = 0; i < 14; ++i)
+      for (int j = 0; j < 14; ++j)
+        dis[1][i][j] = dis[2][i][j] = 1000000000;
+    for (int i = 1; i <= 2; ++i) {
+      queue<pair<int, int> > q;
+      if (i == 1) {
+        q.push(make_pair(4, 4));
+        dis[i][4][4] = 0;
+      }
+      if (i == 2) {
+        q.push(make_pair(9, 9));
+        dis[i][9][9] = 0;
+      }
+      for (int k = 0; k < 14; ++k)
+        for (int o = 0; o < 14; ++o)
+          if (x[k][o] == i) {q.push(make_pair(k, o)); dis[i][k][o] = 0;}
+      while (!q.empty()) {
+        pair<int, int> t = q.front(); q.pop();
+        for (int k = 0; k < 4; ++k) {
+          int nx = t.first + dx2[k], ny = t.second + dy2[k];
+          if (nx < 0 || nx >= 14 || ny < 0 || ny >= 14) continue;
+          if (x[nx][ny]) continue;
+          if (dis[i][nx][ny] == 1000000000) {
+            dis[i][nx][ny] = dis[i][t.first][t.second] + 1;
+            q.push(make_pair(nx, ny));
+          }
+        }
+      }
+    }
+    int res = 0;
+    for (int i = 0; i < 14; ++i)
+      for (int j = 0; j < 14; ++j) 
+        res += dis[player][i][j] < dis[opponent][i][j];
+    // for (int i = 0; i< 14; ++i) 
+    //   for (int j = 0; j < 14; ++j)
+    //     cout << dis[player][i][j] << (j == 13 ? '\n' : ' ');
+    // cout << endl;
+    
+    // for (int i = 0; i< 14; ++i) 
+    //   for (int j = 0; j < 14; ++j)
+    //     cout << dis[opponent][i][j] << (j == 13 ? '\n' : ' ');
+    // cout << res << endl;
+    // exit(0);
+    return res;
+  }
   long double getWeight (Board x, Move m) {
     Board new_board = game_util::ApplyMove(x, m);
     int id2 = m.piece().name();
@@ -87,22 +136,10 @@ public:
     long double res = 0;
     for (int i = 0; i < len; ++i) {
       int id = valid[i].piece().name();
-      res = res - sz[id] * (score.first > score.second ? sz[id] : 1); 
+      res = res - sz[id] * sz[id];
     }
-    res = res * 0.8;
-    long double mn = 1000000000;
-    for (int i = 0; i < 14; ++i) {
-      for (int j = 0; j < 14; ++j) {
-        if (new_board[i][j] == player) {
-          if (player == 1) {
-            mn = min(mn, (long double) abs(13 - i) + abs(13 - j));
-          } else {
-            mn = min(mn, (long double) i + j);
-          }
-        }
-      }
-    }
-    res = res + (14 - mn) * (14 - mn) * 0.3;
+    int mn = bfs(new_board);
+    res = res + mn;
     res = res + (sz[id2] * getSparse() / (14.0 * 14.0));
     return res;
   }
