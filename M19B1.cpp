@@ -102,7 +102,7 @@ public:
         }
       }
     }
-    res = res + (14 - mn) * (14 - mn) * 0.7;
+    res = res + (28 - mn) * (28 - mn);
     res = res + (sz[id2] * getSparse() / (14.0 * 14.0));
     return res;
   }
