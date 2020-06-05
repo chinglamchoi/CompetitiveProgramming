@@ -18,13 +18,20 @@ private:
   int otot;
   int totcnt;
 public:
+  int getUsedPiece () {
+    PieceList used = current_game->used_pieces().first;
+    int res = 0;
+    for (int i = 0; i < 21; ++i)
+      if (!used[i]) res++;
+    return res;
+  }
   void initialize(int player_number, shared_ptr<Game> game, int seed) {
     current_game = game;
     g = mt19937(seed);
     player = player_number;
     opponent = (player == 1 ? 2 : 1);
     otot = 0;
-    totcnt = 0;
+    totcnt = getUsedPiece();
   }
   int CountValidMoves(const Board& board, int player, const PieceList& used_pieces) {
 			vector<pair<int, int>> valid_positions;
@@ -60,13 +67,6 @@ public:
 			}
 			return cnt;
 		}
-  int getUsedPiece () {
-    PieceList used = current_game->used_pieces().first;
-    int res = 0;
-    for (int i = 0; i < 21; ++i)
-      if (!used[i]) res++;
-    return res;
-  }
   int getSparse () {
     Board x = current_game->board();
     int res = 0;
@@ -135,8 +135,9 @@ public:
     Board current = current_game->board();
     ll mx = LLONG_MIN, mx2 = LLONG_MIN, mx3 = LLONG_MIN;
     int tot = 0;
+    arr[0] = 0;
     for (int i = 0; i < len; ++i) {
-        if (totcnt <= 3 && sz[valid_moves[i].piece().name()] < 4) continue; 
+        if (player == 1 && totcnt <= 2 && sz[valid_moves[i].piece().name()] < 4) continue; 
         Board tmp = game_util::ApplyMove(current, valid_moves[i]);
         PieceList used = (player == 1 ? (current_game->used_pieces()).first : (current_game->used_pieces()).second);
         int id = valid_moves[i].piece().id() / 8;
