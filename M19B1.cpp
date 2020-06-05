@@ -88,20 +88,12 @@ public:
     ll res = 0;
     for (int i = 0; i < len; ++i) {
       int id = valid[i].piece().name();
-      res = res - sz[id] * sz[id]; 
+      res = res - sz[id] * sz[id] * (score.first > score.second ? sz[id] : 1); 
     }
-    res = res * (score.first > score.second ? 3 : 2);
-    valid = game_util::GetValidMoves(new_board, player, my);
-    len = (int) valid.size();
-    ll cnt = 0;
-    for (int i = 0; i < len; ++i) {
-      int id = valid[i].piece().name();
-      cnt = cnt + sz[id] * sz[id];
-    }
+    int va = CountValidMoves(new_board, player, my);
+    res = res + va * 10;
     my[id2] = 0;
-    res = res + cnt * (score.first > score.second ? 2 : 3);
-    if (score.first <= score.second) res = res + sz[id2] * sz[id2] * sz[id2];
-    else res = res + sz[id2] * sz[id2];
+    res = res + sz[id2] * sz[id2] * (score.first < score.second ? sz[id2] : 1);
     return res;
   }
   Move move(const vector<Move>& valid_moves) {
