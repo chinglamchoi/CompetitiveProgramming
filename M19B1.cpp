@@ -136,11 +136,12 @@ public:
     long double res = 0;
     for (int i = 0; i < len; ++i) {
       int id = valid[i].piece().name();
-      res = res - sz[id] * sz[id];
+      res = res - sz[id] * sz[id] * sz[id];
     }
+    res = res * 0.8;
     int mn = bfs(new_board);
-    res = res + mn;
-    res = res + (sz[id2] * getSparse() / (14.0 * 14.0));
+    res = res + mn * 12;
+    res = res + (sz[id2] * sz[id2] * getSparse() / (14.0 * 14.0));
     return res;
   }
   Move move(const vector<Move>& valid_moves) {
