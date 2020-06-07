@@ -128,25 +128,22 @@ public:
     // exit(0);
     return res;
   }
-  long double getWeight (Board x, Move m) {
+  ll getWeight (Board x, Move m) {
     Board new_board = game_util::ApplyMove(x, m);
     int id2 = m.piece().name();
-    vector<Move> valid = game_util::GetValidMoves(new_board, opponent, opp);
+    vector<Move> valid = game_util::GetValidMoves(new_board, opponent, my);
     int len = (int) valid.size();
-    long double res = 0;
+    ll res = 0;
     for (int i = 0; i < len; ++i) {
       int id = valid[i].piece().name();
-      res = res - sz[id] * sz[id] * sz[id];
+      res = res - sz[id] * sz[id] * sz[id] * 100;
     }
-    int mn = bfs(new_board);
-    res = res + mn * 8;
-    res = res + (sz[id2] * sz[id2] * getSparse() / (14.0 * 14.0));
     return res;
   }
   Move move(const vector<Move>& valid_moves) {
     tie(my, opp) = current_game->used_pieces();
     score = game_util::GetScore(current_game->board());
-    long double mx = -1000000000000;
+    ll mx = LLONG_MIN, mx2 = LLONG_MIN;
     if (player == 2) {
       swap(my, opp);
       swap(score.first, score.second);
@@ -155,12 +152,20 @@ public:
     Board x = current_game->board();
     int tot = 0;
     for (int i = 0; i < len; ++i) {
-      long double weight = getWeight(x, valid_moves[i]);
+      ll weight = getWeight(x, valid_moves[i]);
       if (weight > mx) {
         mx = weight;
+        mx2 = LLONG_MIN;
         tot = 0;
       }
-      if (weight == mx) arr[++tot] = i;
+      if (weight == mx) {
+        ll weight2 = bfs(game_util::ApplyMove(x, valid_moves[i]));
+        if (weight2 > mx2) {
+          mx2 = weight2;
+          tot = 0;
+        }
+        if (weight == mx && weight2 == mx2) arr[++tot] = i;
+      }
     }
     uniform_int_distribution<int> d(1, tot);
     return valid_moves[arr[d(g)]];
