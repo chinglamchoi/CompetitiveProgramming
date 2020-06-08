@@ -138,9 +138,8 @@ public:
       int id = valid[i].piece().name();
       res = res - sz[id] * sz[id] * sz[id];
     }
-    res = res * 0.8;
     int mn = bfs(new_board);
-    res = res + mn;
+    res = res + mn * 0.7;
     res = res + (sz[id2] * sz[id2] * 20 * getSparse() / (14.0 * 14.0));
     return res;
   }
