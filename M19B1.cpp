@@ -129,19 +129,33 @@ public:
     return res;
   }
   long double getWeight (Board x, Move m) {
-    Board new_board = game_util::ApplyMove(x, m);
-    int id2 = m.piece().name();
-    vector<Move> valid = game_util::GetValidMoves(new_board, opponent, opp);
-    int len = (int) valid.size();
-    long double res = 0;
-    for (int i = 0; i < len; ++i) {
-      int id = valid[i].piece().name();
-      res = res - sz[id] * sz[id] * sz[id];
+    if (player == 1) {
+      Board new_board = game_util::ApplyMove(x, m);
+      int id2 = m.piece().name();
+      vector<Move> valid = game_util::GetValidMoves(new_board, opponent, opp);
+      int len = (int) valid.size();
+      long double res = 0;
+      for (int i = 0; i < len; ++i) {
+        int id = valid[i].piece().name();
+        res = res - sz[id] * sz[id] * sz[id];
+      }
+      res = res * 0.8;
+      int mn = bfs(new_board);
+      res = res + mn * 12;
+      res = res + (sz[id2] * sz[id2] * getSparse() / (14.0 * 14.0));
+      return res;
+    } else {
+      Board new_board = game_util::ApplyMove(x, m);
+      int id2 = m.piece().name();
+      my[id2] = 1;
+      int res = CountValidMoves(new_board, player, my) - CountValidMoves(new_board, opponent, opp); 
+      my[id2] = 0;
+      res = res * 4;
+      int mn = bfs(new_board);
+      res = res + mn * 3;
+      res = res + (sz[id2] * getSparse() / (14.0 * 14.0));
+      return res;
     }
-    int mn = bfs(new_board);
-    res = res + mn * 0.7;
-    res = res + (sz[id2] * sz[id2] * 20 * getSparse() / (14.0 * 14.0));
-    return res;
   }
   Move move(const vector<Move>& valid_moves) {
     tie(my, opp) = current_game->used_pieces();
