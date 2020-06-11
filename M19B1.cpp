@@ -148,9 +148,9 @@ public:
       Board new_board = game_util::ApplyMove(x, m);
       int id2 = m.piece().name();
       my[id2] = 1;
-      int res = CountValidMoves(new_board, player, my) - CountValidMoves(new_board, opponent, opp); 
+      long double res = CountValidMoves(new_board, player, my) - CountValidMoves(new_board, opponent, opp); 
       my[id2] = 0;
-      res = res * 4;
+      res = res * 7;
       int mn = bfs(new_board);
       res = res + mn * 3;
       res = res + (sz[id2] * getSparse() / (14.0 * 14.0));
