@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class program {
+public class D109 {
 	public static void main(String[] args) {
 		Scanner a = new Scanner(System.in);
 		int b = a.nextInt();
